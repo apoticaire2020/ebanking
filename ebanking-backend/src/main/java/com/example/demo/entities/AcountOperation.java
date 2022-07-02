@@ -21,7 +21,7 @@ public class AcountOperation {
 	private Long id;
 	private Date dateOperation;
 	private double amount;
-	
+	private String description;
 	private OperationType type;
 	
 	@ManyToOne
