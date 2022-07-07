@@ -1,4 +1,4 @@
-package com.example.demo.entities;
+package com.example.demo.dtos;
 
 import java.util.List;
 
@@ -15,16 +15,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Data @NoArgsConstructor @AllArgsConstructor
-public class Customer {
+
+@Data
+public class CustomerDto {
 	    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 		private String name;
-		private String email;
+	//	private String email;
 		
-		@OneToMany(mappedBy = "customer")
-	//	@JsonProperty(access = Access.WRITE_ONLY)
-		private List<BankAcount> bankAcounts;
+		
 
 }

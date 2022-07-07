@@ -17,6 +17,7 @@ import com.example.demo.entities.Customer;
 import com.example.demo.entities.SavingAcount;
 import com.example.demo.enums.AccountStatus;
 import com.example.demo.enums.OperationType;
+import com.example.demo.exceptions.BalanceNotSufficientException;
 import com.example.demo.exceptions.BankAcountNotFoundException;
 import com.example.demo.exceptions.CustomerNotFoundException;
 import com.example.demo.repo.AcounrOperationRepo;
@@ -31,30 +32,41 @@ public class EbankingBackendApplication {
 		SpringApplication.run(EbankingBackendApplication.class, args);
 	}
 	
-	
 	@Bean
 	CommandLineRunner commandLineRunner(BankAcountService bankAcountService) {
 		return args->{
-			Customer c = new Customer();
+			
 			Stream.of("hassan","fouad","said","ali").forEach(name->{
+				Customer c = new Customer();
 				c.setName(name);
 				c.setEmail(name+ "@yahoo.fr");
-				
 				bankAcountService.saveCustomer(c);
 			});
-			bankAcountService.listCustomer().forEach(cus->
-			{
-			{try {
-			  bankAcountService.saveCurentBankAcount(Math.random()*100000, c.getId(), 1500);
-			  bankAcountService.saveSavingBankAcount(Math.random()*10000 , c.getId(),8.5);	
-			//  bankAcountService.bankAcountList()
-			} catch (CustomerNotFoundException e) {
-					e.printStackTrace();
-				}}
-			});	
-		};
+			
+			bankAcountService.listCustomer().forEach(cust->
+			
+			{		
+			  try {
+				bankAcountService.saveCurentBankAcount(Math.random()*100000, cust.getId(), 1500);
+			    bankAcountService.saveSavingBankAcount(Math.random()*10000 , cust.getId(),8.5);	
+			    List<BankAcount> bankAcounts= bankAcountService.bankAcountList();
+			     for(BankAcount ba:bankAcounts) {
+				  for (int i = 0; i < 10; i++) {
+					bankAcountService.credit(ba.getId(), Math.random()*2000+2000, "credit");
+					bankAcountService.debit(ba.getId(), Math.random()*1000+500, "debit");
+				 
+				  }
+			}
+			    } catch (CustomerNotFoundException e) {
+									e.printStackTrace();
+				} catch (BankAcountNotFoundException |BalanceNotSufficientException e) {
+				    			e.printStackTrace();
+			    } 
+		});
 		
-	}
+	};
 	
 	
 	}
+	
+}

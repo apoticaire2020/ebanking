@@ -1,13 +1,17 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.dtos.CustomerDto;
 import com.example.demo.entities.AcountOperation;
 import com.example.demo.entities.BankAcount;
 import com.example.demo.entities.CurentAcount;
@@ -17,6 +21,7 @@ import com.example.demo.enums.OperationType;
 import com.example.demo.exceptions.BalanceNotSufficientException;
 import com.example.demo.exceptions.BankAcountNotFoundException;
 import com.example.demo.exceptions.CustomerNotFoundException;
+import com.example.demo.mappers.BanckAcountMapperImp;
 import com.example.demo.repo.AcounrOperationRepo;
 import com.example.demo.repo.BankAcounrRepo;
 import com.example.demo.repo.CustomerRepo;
@@ -26,13 +31,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
-@AllArgsConstructor
+@AllArgsConstructor  // INJECTION DES DEPENDANCES
 @Slf4j
 public class BankAcountServiceImpl implements BankAcountService{
 
-	AcounrOperationRepo acounrOperationRepo	;
-	BankAcounrRepo bankAcounrRepo;
-	CustomerRepo customerRepo; 
+	private AcounrOperationRepo acounrOperationRepo	;
+	private BankAcounrRepo bankAcounrRepo;
+	private CustomerRepo customerRepo; 
+	private BanckAcountMapperImp mapper;
 	//Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	
 	
@@ -46,9 +52,17 @@ public class BankAcountServiceImpl implements BankAcountService{
 	
 
 	@Override
-	public List<Customer> listCustomer() {
-		return	customerRepo.findAll();
-		
+	public List<CustomerDto> listCustomer() {
+		List<Customer> customers=customerRepo.findAll();
+	List<CustomerDto> customerDto=customers.stream()
+			.map(cust->mapper.fromCustomer(cust))
+			.collect(Collectors.toList());
+	/*   List<CustomerDto> lis= new ArrayList<CustomerDto>();
+	   for (Customer cu : customers) {
+		CustomerDto customerDto = mapper.fromCustomer(cu);
+		lis.add(customerDto);
+	}*/
+		return customerDto;
 	}
 
 	@Override
