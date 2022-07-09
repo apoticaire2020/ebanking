@@ -13,7 +13,11 @@ import com.example.demo.exceptions.CustomerNotFoundException;
 
 public interface BankAcountService {
 
-	Customer saveCustomer(Customer customer);
+	CustomerDto saveCustomer(CustomerDto customerDto);
+	CustomerDto updateCustomer(CustomerDto customerDto);
+	void deleteCustomer(Long customerId);
+	CustomerDto getCustomer(Long id) throws CustomerNotFoundException;
+	
 	
 	CurentAcount saveCurentBankAcount(double initialBalance,Long customerId,double overDraft) throws CustomerNotFoundException;
 	SavingAcount saveSavingBankAcount(double initialBalance,Long customerId,double interestRate) throws CustomerNotFoundException;
@@ -26,6 +30,13 @@ public interface BankAcountService {
     void debit(String accountId , double amount , String description) throws BankAcountNotFoundException, BalanceNotSufficientException;
 	void credit(String accountId , double amount , String description) throws BankAcountNotFoundException, BalanceNotSufficientException;
 	void transfert (String accountIdSource,String accountIdDestination , double amount ) throws BankAcountNotFoundException, BalanceNotSufficientException;
+	//CustomerDto getCustomer(Long id) throws CustomerNotFoundException;
+	
+
+	
+
+	
+
 	
 	
 }

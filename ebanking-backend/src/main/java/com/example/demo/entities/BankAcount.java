@@ -3,6 +3,7 @@ package com.example.demo.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,9 +35,9 @@ public abstract class BankAcount {
 	@Enumerated(EnumType.STRING)
 	private AccountStatus status ;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Customer customer;
 	
-	@OneToMany(mappedBy = "bankAcount")
+	@OneToMany(mappedBy = "bankAcount" , cascade = CascadeType.REMOVE)
 	private List<AcountOperation> acountOperations;
 }

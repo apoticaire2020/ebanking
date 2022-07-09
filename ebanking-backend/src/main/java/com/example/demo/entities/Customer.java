@@ -2,6 +2,7 @@ package com.example.demo.entities;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,13 +19,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Customer {
-	    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    @Id @GeneratedValue(strategy = GenerationType.AUTO)
 		private Long id;
 		private String name;
 		private String email;
 		
-		@OneToMany(mappedBy = "customer")
+		
 	//	@JsonProperty(access = Access.WRITE_ONLY)
+		@OneToMany(mappedBy = "customer" , cascade = CascadeType.REMOVE)
 		private List<BankAcount> bankAcounts;
 
 }

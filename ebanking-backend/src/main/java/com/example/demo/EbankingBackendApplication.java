@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.example.demo.dtos.CustomerDto;
 import com.example.demo.entities.AcountOperation;
 import com.example.demo.entities.BankAcount;
 import com.example.demo.entities.CurentAcount;
@@ -37,7 +38,7 @@ public class EbankingBackendApplication {
 		return args->{
 			
 			Stream.of("hassan","fouad","said","ali").forEach(name->{
-				Customer c = new Customer();
+				CustomerDto c = new CustomerDto();
 				c.setName(name);
 				c.setEmail(name+ "@yahoo.fr");
 				bankAcountService.saveCustomer(c);

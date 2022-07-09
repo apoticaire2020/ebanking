@@ -6,6 +6,7 @@ import java.util.List;
 
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -42,19 +43,41 @@ public class BankAcountServiceImpl implements BankAcountService{
 	//Logger log = LoggerFactory.getLogger(this.getClass().getName());
 	
 	
+	
 	@Override
-	public Customer saveCustomer(Customer customer) {
+	public CustomerDto saveCustomer(CustomerDto customerDto) {
 		log.info("saving new customer");
-		Customer savecustomer=customerRepo.save(customer);
-		return savecustomer;
+		
+		Customer cus=mapper.fromCustomerDto(customerDto);
+		Customer savedCustomer= customerRepo.save(cus);
+	
+		return	mapper.fromCustomer(savedCustomer);
+		
 	}
-
+	
+	@Override
+	public CustomerDto updateCustomer(CustomerDto customerDto) {
+		log.info("saving new customer");
+		
+		Customer cus=mapper.fromCustomerDto(customerDto);
+		Customer savedCustomer= customerRepo.save(cus);
+	
+		return	mapper.fromCustomer(savedCustomer);
+		
+	}
+	
+	
+	@Override
+	public void deleteCustomer(Long customerId) {
+		customerRepo.deleteById(customerId);
+		
+	}
 	
 
 	@Override
 	public List<CustomerDto> listCustomer() {
 		List<Customer> customers=customerRepo.findAll();
-	List<CustomerDto> customerDto=customers.stream()
+	    List<CustomerDto> customerDto=customers.stream()
 			.map(cust->mapper.fromCustomer(cust))
 			.collect(Collectors.toList());
 	/*   List<CustomerDto> lis= new ArrayList<CustomerDto>();
@@ -161,5 +184,19 @@ public class BankAcountServiceImpl implements BankAcountService{
 	public List<BankAcount> bankAcountList(){
 		return bankAcounrRepo.findAll();
 	}
+
+
+     
+	@Override
+	public CustomerDto getCustomer(Long id) throws CustomerNotFoundException {
+				
+	Customer cu= customerRepo.findById(id)
+	 .orElseThrow(()->new CustomerNotFoundException("introuv"));
+	return	mapper.fromCustomer(cu);
+	}
+
+
+
+	
 
 }
