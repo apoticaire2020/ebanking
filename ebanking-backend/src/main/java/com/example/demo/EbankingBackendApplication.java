@@ -1,5 +1,6 @@
 package com.example.demo;
 import java.util.Date;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.demo.dtos.CustomerDto;
+import com.example.demo.dtos.BankAcountDto;
 import com.example.demo.entities.AcountOperation;
 import com.example.demo.entities.BankAcount;
 import com.example.demo.entities.CurentAcount;
@@ -50,8 +52,8 @@ public class EbankingBackendApplication {
 			  try {
 				bankAcountService.saveCurentBankAcount(Math.random()*100000, cust.getId(), 1500);
 			    bankAcountService.saveSavingBankAcount(Math.random()*10000 , cust.getId(),8.5);	
-			    List<BankAcount> bankAcounts= bankAcountService.bankAcountList();
-			     for(BankAcount ba:bankAcounts) {
+			    List<BankAcountDto> bankAcounts= bankAcountService.bankAcountList();
+			     for(BankAcountDto ba:bankAcounts) {
 				  for (int i = 0; i < 10; i++) {
 					bankAcountService.credit(ba.getId(), Math.random()*2000+2000, "credit");
 					bankAcountService.debit(ba.getId(), Math.random()*1000+500, "debit");

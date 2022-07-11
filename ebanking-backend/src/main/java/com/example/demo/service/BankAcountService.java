@@ -2,7 +2,10 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.dtos.BankAcountDto;
+import com.example.demo.dtos.CurentBankAcountDto;
 import com.example.demo.dtos.CustomerDto;
+import com.example.demo.dtos.SavingBankAcountDto;
 import com.example.demo.entities.BankAcount;
 import com.example.demo.entities.CurentAcount;
 import com.example.demo.entities.Customer;
@@ -19,13 +22,13 @@ public interface BankAcountService {
 	CustomerDto getCustomer(Long id) throws CustomerNotFoundException;
 	
 	
-	CurentAcount saveCurentBankAcount(double initialBalance,Long customerId,double overDraft) throws CustomerNotFoundException;
-	SavingAcount saveSavingBankAcount(double initialBalance,Long customerId,double interestRate) throws CustomerNotFoundException;
+	CurentBankAcountDto saveCurentBankAcount(double initialBalance,Long customerId,double overDraft) throws CustomerNotFoundException;
+	SavingBankAcountDto saveSavingBankAcount(double initialBalance,Long customerId,double interestRate) throws CustomerNotFoundException;
     
 	List<CustomerDto> listCustomer();	
-    List<BankAcount> bankAcountList();
+    List<BankAcountDto> bankAcountList();
     
-    BankAcount getBankAcount(String accountId) throws BankAcountNotFoundException;
+    BankAcountDto getBankAcount(String accountId) throws BankAcountNotFoundException;
 	
     void debit(String accountId , double amount , String description) throws BankAcountNotFoundException, BalanceNotSufficientException;
 	void credit(String accountId , double amount , String description) throws BankAcountNotFoundException, BalanceNotSufficientException;
