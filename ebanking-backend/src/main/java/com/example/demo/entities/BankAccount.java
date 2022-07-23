@@ -26,10 +26,10 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(length = 4 , name = "TYPE")
 @Data @NoArgsConstructor @AllArgsConstructor
-public abstract class BankAcount {
+public abstract class BankAccount {
 
 	@Id 
-	private String id;
+	private String accountId;
 	private double balance;
 	private Date createAt;
 	@Enumerated(EnumType.STRING)
@@ -39,5 +39,5 @@ public abstract class BankAcount {
 	private Customer customer;
 	
 	@OneToMany(mappedBy = "bankAcount" , cascade = CascadeType.REMOVE)
-	private List<AcountOperation> acountOperations;
+	private List<AccountOperation> acountOperations;
 }

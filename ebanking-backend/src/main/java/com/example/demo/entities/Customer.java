@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Customer {
-	    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+	    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
 		private String name;
 		private String email;
@@ -27,6 +27,6 @@ public class Customer {
 		
 	//	@JsonProperty(access = Access.WRITE_ONLY)
 		@OneToMany(mappedBy = "customer" , cascade = CascadeType.REMOVE)
-		private List<BankAcount> bankAcounts;
+		private List<BankAccount> bankAcounts;
 
 }

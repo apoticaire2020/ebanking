@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dtos.CustomerDto;
 import com.example.demo.entities.Customer;
 import com.example.demo.exceptions.CustomerNotFoundException;
-import com.example.demo.service.BankAcountService;
+import com.example.demo.service.BankAccountService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomerRestController {
 
-	private BankAcountService bankAcountService;
+	private BankAccountService bankAcountService;
 	
 	@GetMapping("/customers")
 	public List<CustomerDto> customerdtos (){

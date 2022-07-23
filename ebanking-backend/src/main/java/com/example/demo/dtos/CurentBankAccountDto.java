@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 
 
 @Data 
-public  class CurentBankAcountDto extends BankAcountDto{
+public  class CurentBankAccountDto extends BankAccountDto{
 
 	
 	private String id;

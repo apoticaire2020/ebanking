@@ -1,4 +1,4 @@
-package com.example.demo.entities;
+package com.example.demo.dtos;
 
 import java.util.Date;
 
@@ -14,17 +14,16 @@ import com.example.demo.enums.OperationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Entity
-@Data @NoArgsConstructor @AllArgsConstructor
-public class AcountOperation {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Data 
+public class AccountOperationDto {
+
+	
 	private Long id;
 	private Date dateOperation;
 	private double amount;
 	private String description;
 	private OperationType type;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
-	private BankAcount bankAcount;
+	
 }
